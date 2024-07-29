@@ -20,26 +20,26 @@ class MyTeleop(Node):
 
         #show
         self.angle=float(input('input angle 5 or 10 or 15'))
+        if(self.angle<0):
+            self.angle = self.angle+8*(self.angle/5+1)-12
+            print(self.angle)
         self.key=input('if you want to go, press w. else s')
+        
 
     def timer_callback(self):  # タイマーのコールバック関数
-        #key = input('w, sキー入力後にEnterキーを押下 <<')  
-        # キー取得
-        # キーの値により並進速度や角速度を変更
-        #angle=float(input('input angle 0.1-0.3'))
-        #key=input('w de zenshin s ha stop')
+        
 
         if self.key == 'w':
-            self.vel.linear.x = 0.05
+            self.vel.linear.x = 0.20
 
-            if(self.count>10): #1 sec go straight
-                self.vel.angular.z +=self.angle*0.002
+            if(self.count>90): #1 sec go straight
+                self.vel.angular.z +=-(self.angle)*0.000055
         elif self.key == 's':
             self.vel.linear.x = 0.0
             self.vel.angular.z = 0.0
         else:
             print('入力キーが違います．')
-        if(self.count>30): #after 3 sec stop
+        if(self.count>180): #after 3 sec stop
             self.get_logger().info('stop')
             self.vel.linear.x = 0.0
             self.vel.angular.z = 0.0
